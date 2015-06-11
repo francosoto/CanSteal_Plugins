@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Autocomplete Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="row">
+			<div class="col-md-5">
+				<label>Source</label>
+				<input type="text" class="form-control" id="simple">
+				<label>Default Ajax</label>
+				<input type="text" class="form-control" id="ajax">
+				<label>Custom Ajax</label>
+				<input type="text" class="form-control" id="cajax">
+				<label>Custom View</label>
+				<input type="text" class="form-control" id="cview">
+				<label>No source</label>
+				<input type="text" class="form-control" id="nosource">
+			</div>
+		</div>
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script id="custom_view" type="text/mustache">
+	<a>
+		{{pais}}
+	<br>
+	<small class="muted">{{desc}}</small>
+	</a>
+</script>
+<script type="text/javascript">
+	steal(
+		'sigma/controls/typeahead'
+	,	'can/util/fixture'
+	,	'can/model'
+	).then(
+		function()
+		{
+			can.fixture(
+				'POST /paises'
+			,	function(req,res)
+				{
+					return	res(
+								200
+							,	can.map(
+									can.grep(
+										['Argentina','Alemania','Angola','Argelia','Austria','Benín','Bolivia','Brasil']
+									,	function(val)
+										{
+											return	val.toLowerCase().indexOf(req.data.value.toLowerCase()) != -1
+										}
+									)
+								,	function(val)
+									{
+										return	{name: val}
+									}
+								)
+							)
+				}
+			)
+
+			can.Model(
+				'Paises'
+			,	{
+					filter: function(query)
+					{
+						return	can.ajax(
+									{
+										url: '/paises'
+									,	method: 'POST'
+									,	data: query
+									}
+								)
+					}
+				}
+			,	{	}
+			)
+
+			//	Autocomplete con Source
+			new	Sigma.Autocomplete(
+				'#simple'
+			,	{
+					source: can.map(
+								['Argentina','Alemania','Angola','Argelia','Austria','Benín','Bolivia','Brasil']
+							,	function(val)
+								{
+									return	{name: val}
+								}
+							)
+				}
+			)
+
+			//	Autocomplete utilizando su ajax interno
+			new	Sigma.Autocomplete(
+				'#ajax'
+			,	{
+					ajax:
+					{
+						url:	'/paises'
+					}
+				}
+			)
+
+			//	Autocomplete usando un ajax externo (custom)
+			new	Sigma.Autocomplete(
+				'#cajax'
+			,	{
+					ajax: Paises.filter
+				}
+			)
+			
+
+			//	Autocomplete utilizando una vista (custom)
+			new	Sigma.Autocomplete(
+				'#cview'
+			,	{
+					source: can.map(
+								['Argentina','Alemania','Angola','Argelia','Austria','Benín','Bolivia','Brasil']
+							,	function(val)
+								{
+									return	{pais: val, desc: 'Desc del Pais'}
+								}
+							)
+				,	view_item:	'#custom_view'
+				,	display: 'pais'
+				}
+			)
+
+			//	Autocomplete sin source o ajax. Osea input (Checkeo de Error)
+			new	Sigma.Autocomplete(
+				'#nosource'
+			,	{	}
+			)
+		}
+	)
+</script>

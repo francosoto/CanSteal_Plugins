@@ -1,0 +1,158 @@
+.wizard {
+  background-color: #f9f9f9;
+  border: 1px solid #d4d4d4;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  *zoom: 1;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+.wizard:before,
+.wizard:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.wizard:after {
+  clear: both;
+}
+
+.wizard ul {
+  padding: 0;
+  margin: 0;
+  list-style: none outside none;
+}
+
+.wizard ul li {
+  position: relative;
+  float: left;
+  height: 40px;
+  padding: 10px;
+  margin: 0;
+  font-size: 14px;
+  color: #999999;
+  cursor: pointer;
+  background: #ededed;
+}
+
+.wizard ul li .chevron {
+  position: absolute;
+  top: 0;
+  right: -14px;
+  display: block;
+  border: 20px solid transparent;
+  border-right: 0;
+  border-left: 14px solid #d4d4d4;
+}
+
+.wizard ul li .chevron:before {
+  position: absolute;
+  top: -20px;
+  right: 1px;
+  display: block;
+  border: 20px solid transparent;
+  border-right: 0;
+  border-left: 14px solid #ededed;
+  content: "";
+}
+
+.wizard ul li.incomplete  {
+  color: #BD0632;
+  background: #f3f4f5;
+}
+
+.wizard ul li.complete  {
+  color: #468847;
+  background: #f3f4f5;
+}
+
+.wizard ul li.complete:hover,
+.wizard ul li.incomplete:hover {
+  background: #e7eff8;
+}
+
+.wizard ul li.complete:hover .chevron:before,
+.wizard ul li.incomplete:hover .chevron:before{
+  border-left: 14px solid #e7eff8;
+}
+
+.wizard ul li.complete .chevron:before,
+.wizard ul li.incomplete .chevron:before {
+  border-left: 14px solid #f3f4f5;
+}
+
+.wizard ul li.active {
+  color: #3a87ad;
+  background: #f1f6fc;
+}
+
+.wizard ul li:not(.active) a {
+  display: none;
+}
+
+.wizard ul li.active .chevron:before {
+  border-left: 14px solid #f1f6fc;
+}
+
+.wizard ul li .badge {
+  margin-right: 8px;
+}
+
+.wizard ul li {
+  z-index: 10;
+  padding-left: 20px;
+  border-radius: 4px 0 0 4px;
+}
+
+.wizard .actions {
+  float: right;
+  padding-right: 15px;
+  line-height: 44px;
+  vertical-align: middle;
+}
+.step-content .step-pane {
+  display: none;
+}
+
+.step-content .wizard .active {
+  display: block;
+}
+
+.step-content .wizard .active .btn-group .active {
+  display: inline-block;
+}
+
+.step-content {
+  border: 1px solid #D4D4D4;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  padding: 20px;
+  overflow: auto;
+}
+
+ul li .alert {
+  margin-bottom: 5px !important;
+}
+
+.row-header,
+.row-content  {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#searchers {
+  margin-left: 17px; 
+}
+
+.step-content .step-actions{
+  clear: both;
+  height: 1px;
+  border-top: 1px solid #D4D4D4;
+  padding: 20px;
+  margin-left: -20px;
+  margin-right: -20px;  
+}

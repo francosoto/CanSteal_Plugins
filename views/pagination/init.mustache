@@ -1,0 +1,38 @@
+<ul class="pagination">
+	<li class="first-page">
+		<a class="jumpTo" page-to-jump="{{first_page}}">
+			<i class="fa fa-angle-double-left"></i>
+		</a>
+	</li>
+	<li class="prev-page">
+		<a class="jumpTo" page-to-jump="{{prev_page}}">
+			<i class="fa fa-angle-left"></i>
+		</a>
+	</li>
+	{{#pages}}
+	<li class="page">
+		<a class="jumpTo" page-to-jump="{{page_number}}">
+			{{page_number}}
+		</a>
+	</li>
+	{{/pages}}
+	<li class="next-page">
+		<a class="jumpTo" page-to-jump="{{next_page}}">
+			<i class="fa fa-angle-right"></i>
+		</a>
+	</li>
+	<li class="last-page">
+		<a class="jumpTo" page-to-jump="{{last_page}}">
+			<i class="fa fa-angle-double-right"></i>
+		</a>
+	</li>
+	<li></li>
+	<li>
+		<div class="input-group col-md-3">
+			<input type="text" class="form-control jumpTo" value="{{current_page}}">
+			<span class="input-group-btn">
+				<button class="btn btn-default jumpTo" type="button">Ir!</button>
+			</span>
+		</div>
+	</li>
+</ul>

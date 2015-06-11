@@ -1,0 +1,13 @@
+.fileupload .fileupload-preview span {
+	padding: 10px !important;
+}
+
+.fileupload .fileupload-preview {
+	margin-bottom: 10px !important;
+	padding: 5px !important;
+}
+
+.fileupload .btn, .fileupload .btn i {
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+}

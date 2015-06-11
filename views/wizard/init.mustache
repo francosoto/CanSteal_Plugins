@@ -1,0 +1,19 @@
+<div>
+	<div class="wizard">
+		<ul class="steps">
+			{{#steps}}
+			<li>
+				<span class="label label-default"></span>
+				<span class="title">
+					<a data-route="{{key}}">
+						{{label}}
+					</a>
+				</span>
+				<span class="chevron"></span>
+			</li>
+			{{/steps}}
+		</ul>
+	</div>
+	<div class="step-content">
+	</div>
+</div>

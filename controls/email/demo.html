@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Form Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	</head>
+	<body class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="form col-md-10">
+			<input class="email form-control" type="text">
+		</div>
+		<div class="col-md-1">
+		</div>
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'sigma/controls/email'
+	,	'can/util/fixture'
+	,	'can/model'
+	).then(
+		function()
+		{
+			//	TODO: Autocomplete + Upload + Date!! Plugins que se acomodan al Form!
+
+			new Sigma.Email(
+				can.$('.email')
+			,	{
+					
+				}
+			)
+		}
+	)
+</script>

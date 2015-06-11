@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Form Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	</head>
+	<body class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="form col-md-10">
+		</div>
+		<div class="col-md-1">
+		</div>
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'jquery'
+	).then(
+		'sigma/controls/form'
+	,	'can/util/fixture'
+	,	'can/model'
+	).then(
+		function()
+		{
+			can.fixture(
+				'GET /paises'
+			,	function(req,res)
+				{
+					return	res(200,[{id: 1, name: 'Argentina'},{id: 2, name: 'España'}])
+				}
+			)
+
+			can.Model(
+				'Paises'
+			,	{
+					findAll: 'GET /paises'
+				}
+			,	{
+					getValue: function()
+					{
+						return	this.attr('id')
+					}
+				,	getLabel: function()
+					{
+						return this.attr('name')
+					}
+				}
+			)
+
+			//	TODO: Date!! Plugins que se acomodan al Form!
+
+			new Sigma.Form(
+				can.$('.form')
+			,	{
+					data:
+					{
+						'col-1':
+						[
+							{
+								type:	'text'
+							,	name:	'username'
+							,	label:	'Usuario' 
+							,	note:	'Complete este campo con su nombre de usuario'
+							}
+						,	{
+								type: 'select'
+							,	name: 'paises'
+							,	label: 'Paises'
+							,	options:
+								[
+									{
+										value: 1
+									,	label: 'Argentina'
+									}
+								,	{
+										value: 2
+									,	label: 'España'
+									}
+								]
+							}
+						,	{
+								type: 'select'
+							,	name: 'paises'
+							,	label: 'Paises ajax'
+							,	value_key: 'id'
+							,	label_key: 'name'
+							,	ajax:
+								{
+									url: '/paises'
+								}
+							}
+						,	{
+								type: 'select'
+							,	name: 'paises'
+							,	label: 'Paises deferred'
+							,	options: Paises.findAll()
+							}
+						,	{
+								type: 'text'
+							,	name: 'peso'
+							,	label: 'Peso'
+							,	addon:
+								{
+									where: 'prepend'
+								,	text: 'Kg'
+								}
+							}
+						,	{
+								type: 'text'
+							,	name: 'distancia'
+							,	label: 'Distancia'
+							,	addon:
+								{
+									where: 'append'
+								,	text: 'mm'
+								}
+							}
+						,	{
+								type: 'text'
+							,	name: 'avion'
+							,	label: 'Avion'
+							,	addon:
+								{
+									where: 'append'
+								,	icon: 'icon-fighter-jet'
+								}
+							}
+						,	{
+								type: 'text'
+							,	name: 'telefono'
+							,	label: 'Telefono'
+							,	help: 'Codigo de area sin 0.<br> Si es celular sin 15.'
+							}
+						]
+					,	'col-2':
+						[
+							{
+								type:	'password'
+							,	name:	'password'
+							,	label:	'Contraseña' 
+							}
+						,	{
+								type:	'textarea'
+							,	name:	'detalles'
+							,	label:	'Detalle'
+							}
+						,	{
+								type: 'button'
+							,	name: 'tocame'
+							,	label: 'Tocame'
+							}
+						,	{
+								type: 'button'
+							,	class: 'btn-primary'
+							,	name: 'tocame'
+							,	label: 'Tocame'
+							}
+						,	{
+								type: 'legend'
+							,	name: 'soy_leyenda'
+							,	label: 'Soy Leyenda'
+							}
+						,	{
+								type: 'radio'
+							,	name: 'radio_loco'
+							,	label: 'Radio Loco'
+							}
+						]
+					,	'col-3':
+						[
+							{
+								type: 'file'
+							,	name: 'upload'
+							,	label: 'Upload'
+							}
+						,	{
+								type: 'date'
+							,	name: 'date-picker'
+							,	label: 'Fecha'
+							}
+						,	{
+								type: 'email'
+							,	name: 'email'
+							,	label: 'Correo'
+							,	validate: ['required']
+							}
+						,	{
+								type: 'button'
+							,	name: 'submit'
+							,	submit: true
+							,	label: 'Submit'
+							}
+						]
+					}
+				,	id:	'myForm'
+				,	class:	'form'
+				,	type: 'form-horizontal'
+				,	onSubmit: function(form)
+					{
+						return	can.Deferred(function(){console.log(form); return form}).reject({ error: '500', msg: 'Ese no es un gato' })
+					}
+				,	onSubmitText: 'Submiting'
+				,	submitModalData: {title: 'Error loco ocurrio'}
+				}
+			)
+		}
+	)
+</script>

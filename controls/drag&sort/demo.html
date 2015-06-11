@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<title>Programador Demo</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<script type='text/javascript' src='../../../steal/steal.js'></script>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	steal(
+		'jquery'
+	).then(
+		'sigma/controls/drag&sort'
+	).then(
+		function()
+		{
+
+			new Sigma.Dragger(
+				can.$('body')
+			,	{
+					view: 'sigma/views/drag&sort/init.mustache'
+				,	view_box: 'sigma/views/drag&sort/box.mustache'
+				,	view_available: 'sigma/views/drag&sort/box.mustache'
+				,	available: new can.Observe(
+						{
+							title: 'Campos Disponibles'
+						,	items:
+								[{title: 'Campo 7', tipo_campo: 'texto', es_indicador: false}
+								,{title: 'Campo 7', tipo_campo: 'date', es_indicador: false}
+								,{title: 'Campo 7', tipo_campo: 'double', es_indicador: true}
+								,{title: 'Campo 5', tipo_campo: 'texto', es_indicador: false}
+								,{title: 'Campo 7', tipo_campo: 'integer', es_indicador: false}]
+						}
+					)
+				,	removable: true
+				,	editable: false
+				,	box_action: true
+				,	dragBetween: true
+				,	new: true
+				,	box_name: "Nuevo Grupo"
+				,	data: 	new can.Observe(
+						{
+							targets:
+							{
+								title: 'Campos Disponibles'
+							,	items:
+									[{title: 'Campo 2', tipo_campo: 'texto', es_indicador: false}
+									,{title: 'Campo 3', tipo_campo: 'date', es_indicador: false}
+									,{title: 'Campo 4', tipo_campo: 'double', es_indicador: true}
+									,{title: 'Campo 5', tipo_campo: 'texto', es_indicador: false}
+									,{title: 'Campo 7', tipo_campo: 'integer', es_indicador: false}]
+							}
+						}
+					)
+				}
+			)
+		}
+	)
+</script>

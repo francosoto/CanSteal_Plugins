@@ -1,0 +1,25 @@
+.sigma_searcher .searcher-label
+{
+	padding: 7px;
+}
+.sigma_searcher .busqueda-avanzada
+{
+	padding: 15px !important;
+}
+
+.sigma_searcher .busqueda-avanzada .title
+{
+	padding-bottom: 15px;
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 25px;
+}
+.sigma_searcher .busqueda-avanzada .form-control
+{
+	border-radius: 4px !important;
+}
+
+.sigma_searcher .busqueda-avanzada .input-group .form-control
+{
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}

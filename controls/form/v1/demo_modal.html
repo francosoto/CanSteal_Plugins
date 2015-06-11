@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Form Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	</head>
+	<body class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="form col-md-10">
+			<button type="button" class="btn btn-primary open-form">Abrir Form</button>
+		</div>
+		<div class="col-md-1">
+		</div>
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'jquery'
+	).then(
+		'sigma/controls/form/modal.js'
+	,	'can/util/fixture'
+	,	'can/model'
+	).then(
+		function()
+		{
+			can.bind.call(
+				can.$('button.open-form')
+			,	'click'
+			,	function()
+				{
+					new	Sigma.Form.Modal(
+						can.$('<div>')
+					,	{
+							data:
+							[
+								{
+									type: 'text'
+								,	name: 'user'
+								,	label: 'Usuario'
+								,	required: true
+								,	validate: 'required'
+								}
+							,	{
+									type:	'password'
+								,	name:	'password'
+								,	label:	'Contraseña'
+								,	required: true
+								,	validate: 'required'
+								}
+							,	{
+									type: 'button'
+								,	name: 'submit'
+								,	submit: true
+								,	label: 'Entrar'
+								}
+							]
+						,	id:	'myForm'
+						,	class:	'form'
+						,	type: 'form-horizontal'
+						,	onModal: true
+						,	onSubmit: function(form)
+							{
+								return	can.Deferred(function(){console.log(form); return form}).reject({ error: '500', msg: 'Ese no es un gato' })
+							}
+						,	onSubmitText: 'Entrando'
+						,	submitModalData: {title: 'Error loco ocurrio'}
+						,	title: 'Formulario de Prueba'
+						}
+					)
+				}
+			)
+		}
+	)
+</script>

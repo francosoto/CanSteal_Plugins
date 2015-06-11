@@ -1,0 +1,27 @@
+steal(
+	'jquery'
+).then(
+	'plugin/bootstrap/js/bootstrap.js'
+,	'plugin/bootstrap/css/bootstrap.css'
+,	'plugin/bootstrap/css/bootstrap-theme.css'
+,	'plugin/font-awesome/css/font-awesome.css'
+,	'plugin/lodash/lodash.js'
+,	'plugin/drag&sort/jquery.dragsort-0.5.1.js'
+,	'plugin/jquery.browser/jquery.mb.browser.min.js'
+,	'plugin/messenger/js/messenger.min.js'
+,	'plugin/messenger/css/messenger.css'
+,	'plugin/messenger/css/messenger-theme-air.css'
+,	'plugin/messenger/js/messenger-theme-flat.js'
+,	'plugin/messenger/js/messenger-options.js'
+,	'plugin/pick-a-color/js/tinycolor-0.9.16.min.js'
+,	'plugin/pick-a-color/js/pick-a-color-1.2.0.min.js'
+,	'plugin/pick-a-color/css/pick-a-color-1.2.0.min.css'
+,	'plugin/controlPanel/panel-gral.js'
+,	'plugin/highcharts/highcharts.src.js'
+,	'plugin/jsPDF-master/dist/jspdf.debug.js'
+,	'plugin/canvg/canvg.js'
+).then(
+	'plugin/jsPDF-master/jspdf.plugin.from_html.js'
+,	'plugin/highcharts/modules/exporting.js'
+,	'plugin/canvg/rgbcolor.js'
+)

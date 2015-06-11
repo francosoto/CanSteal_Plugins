@@ -1,0 +1,34 @@
+ul.nav li a {
+	cursor: pointer;
+}
+
+.tabs-below > .nav-tabs,
+.tabs-right > .nav-tabs,
+.tabs-left > .nav-tabs {
+	margin-top: 41px;
+}
+
+.tabs-right > .nav-tabs {
+	margin-left: -1px !important;
+}
+
+.tabs-left > .nav-tabs {
+	margin-right: -1px !important;
+}
+
+.table {
+	font-size: 12px !important;
+}
+
+.table .fa {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.table .action .fa:hover {
+	cursor: pointer;
+}
+
+.upercased-text{
+	text-transform:uppercase;
+}

@@ -1,0 +1,36 @@
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>
+				#
+			</th>
+			<th class="sorteable" to-sort="name">
+				Nombre
+			</th>
+			<th class="sorteable" to-sort="lastName">
+				Apellido
+			</th>
+			<th class="sorteable" to-sort="age">
+				Edad
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#items}}
+		<tr>
+			<td>
+				{{id}}
+			</td>
+			<td>
+				{{name}}
+			</td>
+			<td>
+				{{lastName}}
+			</td>
+			<td>
+				{{age}}
+			</td>
+		</tr>
+		{{/items}}
+	</tbody>
+</table>

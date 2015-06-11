@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Wizard Demo</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div id="demo">
+		</div>
+	</body>
+</html>
+<script id="template" type="text/mustache">
+	<button type="button" class="btn btn-success">Habilitar</button>
+	<button type="button" class="btn btn-danger">Deshabilitar</button>
+</script>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'sigma/controls/wizard'
+	).then(
+		function()
+		{
+			Sigma.Control(
+				'Paso'
+			,	{
+					defaults:
+					{
+						next: undefined
+					,	view: '#template'
+					}
+				}
+			,	{
+					_render_content: function()
+					{
+						can.append(
+							this.element
+						,	can.view('#template')
+						)
+					}
+
+				,	'.btn-success click': function()
+					{
+						can.trigger(
+							this.element	
+						,	'next.sigma.wizard'
+						,	{
+								step: this.options.next
+							,	data: this.options.data
+							}
+						)
+					}
+
+				,	'.btn-danger click': function()
+					{
+						can.trigger(
+							this.element	
+						,	'disable_next.sigma.wizard'
+						)
+					}
+				}
+			)
+
+			Sigma.Control(
+				'Final'
+			,	{
+					defaults:
+					{
+						next: undefined
+					,	view: '#template'
+					}
+				}
+			,	{
+					_render_content: function()
+					{
+						can.append(
+							this.element
+						,	can.view('#template')
+						)
+					}
+
+				,	'.btn-success click': function()
+					{
+						can.trigger(
+							this.element	
+						,	'final.sigma.wizard'
+						,	{
+								data: this.options.data
+							}
+						)
+					}
+
+				,	'.btn-danger click': function()
+					{
+						can.trigger(
+							this.element	
+						,	'disable_final.sigma.wizard'
+						)
+					}
+
+				,	'done.sigma.wizard': function(el,ev,data)
+					{
+						console.log(arguments)
+					}
+				}
+			)
+
+			Sigma.Wizard(
+				'Wizard_demo'
+			,	{
+					defaults:
+					{
+						view:	'app/programador/views/wizard/template.mustache'
+					,	data:	{	}
+					}
+				}
+			,	{
+					_render_paso_1: function($element,wizard_data)
+					{
+						new Paso(
+							$element
+						,	{
+								next: 'paso_2'
+							,	data: wizard_data.attr({paso_1: true})
+							}
+						)
+					}
+
+				,	_render_paso_2: function($element,wizard_data)
+					{
+						new Paso(
+							$element
+						,	{
+								next: 'paso_3'
+							,	data: wizard_data.attr({paso_2: true})
+							}
+						)
+					}
+
+				,	_render_paso_3: function($element,wizard_data)
+					{
+						new Final(
+							$element
+						,	{
+								data: wizard_data.attr({paso_3: true})
+							}
+						)
+					}
+				}
+			)
+
+			new Wizard_demo(
+				can.$('#demo')
+			,	{
+					view:		'sigma/views/wizard/init.mustache'
+				,	data:
+					{
+						steps:
+						[
+							{
+								label:	'Paso 1'
+							,	key:	'paso_1'
+							,	initial: true
+							}
+						,	{
+								label:	'Paso 2'
+							,	key:	'paso_2'
+							}
+						,	{
+								label:	'Paso 3'
+							,	key:	'paso_3'
+							,	final:	true
+							}
+						]
+					}
+				}
+			)
+		}
+	)
+</script>

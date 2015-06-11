@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>QUnit - Sigma.Form</title>
+</head>
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1>Sigma.Form</h1>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div id="frame"></div>
+			</div>
+		</div>
+	</div>
+	<script type='text/javascript' src='../../steal/steal.js'></script>
+	<script type="text/javascript">
+		steal(
+			'controls/form'
+		,	'can/util/fixture'
+		,	'can/model'
+		).then(
+			function()
+			{
+
+				can.fixture(
+					'POST /paises'
+				,	function(req,res)
+					{
+						return	res(
+									200
+								,	can.map(
+										can.grep(
+											['Argentina','Alemania','Angola','Argelia','Austria','Benín','Bolivia','Brasil']
+										,	function(val)
+											{
+												return	val.toLowerCase().indexOf(req.data.value.toLowerCase()) != -1
+											}
+										)
+									,	function(val)
+										{
+											return	{name: val}
+										}
+									)
+								)
+					}
+				)
+
+				can.Model(
+					'Paises'
+				,	{
+						filter: function(query)
+						{
+							return	can.ajax(
+										{
+											url: '/paises'
+										,	method: 'POST'
+										,	data: query
+										}
+									)
+						}
+					}
+				,	{	}
+				)
+
+
+				new	Sigma.Form(
+					can.$('#frame')
+				,	{
+						data:
+						[
+							{
+								type: 'autocomplete'
+							,	name: 'pais'
+							,	label: 'Pais'
+							,	ajax: Paises.filter
+							,	validate: 'autocompleted'
+							,	required: true
+							,	addon:
+								{
+									where: 'append'
+								,	type: 'text'
+								,	text: 'eye'
+								}
+							}
+						,	{
+								type: 'colorpicker'
+							,	name: 'color'
+							,	label: 'ColorPicker'
+							}
+						,	{
+								type: 'text'
+							,	name: 'hola'
+							,	label: 'Hola'
+							,	validate: ['string','minLength:1']
+							,	note: 'Una nota Loca'
+							}
+						,	{
+								type: 'date'
+							,	name: 'fecha'
+							,	label: 'Fecha'
+							,	help: 'Fecha en formato hora'
+							,	required: true
+							}
+						,	{
+								type: 'select'
+							,	name: 'chau'
+							,	label: 'Chau'
+							,	text: 'Seleccione un Bool'
+							,	options:
+								[
+									{
+										label: 'Si'
+									,	value: true
+									}
+								,	{
+										label: 'No'
+									,	value: false
+									}
+								]
+							}
+						,	{
+								type: 'checkbox'
+							,	name: 'remember'
+							,	label: 'Recordarme'
+							}
+						,	{
+								type: 'radio'
+							,	name: 'asies'
+							,	options:
+								[
+									{
+										label: 'Si'
+									,	value: true
+									}
+								,	{
+										label: 'No'
+									,	value: false
+									}
+								]
+							}
+						,	{
+								type: 'textarea'
+							,	name: 'descripcion'
+							,	label: 'Descripcion'
+							}
+						,	{
+								type: 'static'
+							,	name: 'estatico'
+							,	label: 'Estatico'
+							,	value: 'Texto Estatico'
+							}
+						,	{
+								type: 'file'
+							,	name: 'import'
+							,	label: 'Importacion'
+							}
+						,	{
+								type: 'button'
+							,	name: 'signin'
+							,	label: 'Ingresar'
+							,	submit: true
+							}
+						]
+					,	default_data:
+						{
+							hola: 'Texto Por Defecto'
+						,	asies: false
+						,	remember: true
+						,	chau: true
+						,	descripcion: 'Una breve descripcion de mi persona...'
+						,	color: '008000'
+						}
+					,	id:	'myForm'
+					,	class: 'unaClase'
+					,	type: 'form-horizontal'
+					}
+				)
+			}
+		)
+	</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Topbar Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div id="demo">
+		</div>
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'jquery'
+	).then(
+		'sigma/controls/topbar'
+	,	'sigma/controls/topbar/topbar.css'
+	).then(
+		function()
+		{
+			new Sigma.Topbar(
+				can.$('#demo')
+			,	{
+					view:		'sigma/views/topbar/init.mustache'
+				,	data:
+					{
+						brand: 'Topbar'
+					,	user:
+						{
+							username: 'nguidi'
+						}
+					,	options:
+						[
+							{
+								name:	'Opcion 1'
+							,	key:	'opcion_1'
+							}
+						,	{
+								name:	'Opcion 2'
+							,	key:	'opcion_2'
+							,	suboptions:
+								[
+									{
+										name:	'Opcion 2.1'
+									,	key:	'opcion_2_1'
+									}
+								,	{
+										name:	'Opcion 2.2'
+									,	key:	'opcion_2_2'
+									}
+								]
+							}
+						,	{
+								name:	'Opcion 3'
+							,	key:	'opcion_3'
+							}
+						,	{
+								name:	'Opcion 4'
+							,	key:	'opcion_4'
+							}
+						,	{
+								name:	'Opcion 5'
+							,	key:	'opcion_5'
+							,	suboptions:
+								[
+									{
+										name:	'Opcion 5.1'
+									,	key:	'opcion_5_1'
+									}
+								,	{
+										name:	'Opcion 5.2'
+									,	key:	'opcion_5_2'
+									}
+								,	{
+										name:	'Opcion 5.3'
+									,	key:	'opcion_5_3'
+									}
+								]
+							}
+						]
+					}
+				,	route:
+					{
+						route: 'menu/:option'
+					,	option:	'opcion_1'
+					}
+				,	routeKey:	'option'
+				,	allowed_options: ['option']
+				}
+			)
+		}
+	)
+</script>

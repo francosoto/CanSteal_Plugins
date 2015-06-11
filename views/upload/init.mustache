@@ -1,0 +1,26 @@
+<div class="col-md-6">
+	<div class="form-group">
+		<label class="col-lg-2 control-label">
+			{{label}}
+		</label>
+		<div class="fileupload-preview col-lg-10">
+			<i class="icon-file"></i>
+			<span class="preview-name"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">
+		</label>
+		<div class="col-lg-10 fileupload-buttons">
+			<input type="file" class="hide"/>
+		</div>
+	</div>
+</div>
+<div class="col-md-6 upload-status">
+	<p class="text-muted">{{upload_msg}}</p>
+	<div class="progress progress-striped">
+		<div class="progress-bar"  role="progressbar" style="width: {{completed}}">
+			<span>{{completed}}</span>
+		</div>
+	</div>
+</div>

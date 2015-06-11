@@ -1,0 +1,26 @@
+<table class="date table-condensed years">
+	<thead>
+		<tr>
+			<th class="prev text-center">
+				<i class="fa fa-chevron-left"></i>
+			</th>
+			<th class="switch text-center">
+				{{range}}
+			</th>
+			<th class="next text-center">
+				<i class="fa fa-chevron-right"></i>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#cols}}
+		<tr>
+			{{#years}}
+				<td class="year text-center {{yearClass}}" date-value="{{year}}">
+					{{year}}
+				</td>
+			{{/years}}
+		</tr>
+		{{/cols}}
+	</tbody>
+<table>

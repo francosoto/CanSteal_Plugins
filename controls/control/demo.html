@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Control Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="row">
+			<div class="col-md-6">
+				<ul class="list-group">
+					<li id="data">
+					</li>
+					<li id="noData">
+					</li>
+					<li id="empty">
+					</li>
+					<li id="loading">
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'sigma/controls/control'
+	,	'can/util/fixture'
+	).then(
+		function()
+		{
+			can.fixture.delay = 155000;
+
+			can.fixture(
+				'GET /control/1'
+			,	function(req,res)
+				{
+					return	res(404,'error')
+				}
+			)
+
+			new Sigma.Control(
+				can.$('#data')
+			,	{
+					data: {id: 1, label: 'Demo'}
+				}
+			)
+
+			new Sigma.Control(
+				can.$('#noData')
+			)
+
+			new Sigma.Control(
+				can.$('#empty')
+			,	{
+					data: {}
+				}
+			)
+
+			new Sigma.Control(
+				can.$('#loading')
+			,	{
+					data:	can.ajax(
+								{
+									url: '/control/1'
+								}
+							)
+				}
+			)
+		}
+	)
+</script>

@@ -1,0 +1,26 @@
+<table class="date table-condensed months">
+	<thead>
+		<tr>
+			<th class="prev text-center">
+				<i class="fa fa-chevron-left"></i>
+			</th>
+			<th class="switch text-center">
+				{{year}}
+			</th>
+			<th class="next text-center">
+				<i class="fa fa-chevron-right"></i>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#cols}}
+		<tr>
+			{{#months}}
+				<td class="months text-center {{monthClass}}" date-value="{{month}}">
+					{{name}}
+				</td>
+			{{/months}}
+		</tr>
+		{{/cols}}
+	</tbody>
+<table>

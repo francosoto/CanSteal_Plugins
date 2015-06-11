@@ -1,0 +1,14 @@
+.sigma_table table thead tr th .fa
+{
+	line-height: 10px;
+}
+
+.sigma_table table thead tr th .fa:hover
+{
+	cursor: pointer;
+}
+
+.sigma_table table thead tr th .fa-sort-desc
+{
+	position: absolute;
+} 

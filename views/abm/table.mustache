@@ -1,0 +1,25 @@
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th class="sorteable" to-sort="dias">
+				Dias
+			</th>
+			<th class="text-center">
+				<i class="fa fa-cogs"></i>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each items}}
+		<tr {{data 'value'}}>
+			<td>
+				{{name}}
+			</td>
+			<td class="action text-center">
+				<i class="text-info fa fa-pencil"></i>
+				<i class="text-danger fa fa-times"></i>
+			</td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>

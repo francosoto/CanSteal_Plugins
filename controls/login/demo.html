@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Login Demo</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div id="home"></div>
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'sigma/lib'
+	,	'sigma/controls/login'
+	,	'can/util/fixture'
+	,	'can/model'
+	).then(
+		function()
+		{
+			can.Model(
+				'Personajes'
+			,	{	
+					signin: function(form_data)
+					{
+						return	can.ajax(
+									{
+										url:	'/signin'
+										// url: 'http://172.16.4.75:8080/ToyotaTsusho/usuario/login'
+									,	data:	form_data.form
+									,	type:	'POST'
+									}
+								)
+					}
+				,	signup: function(form_data)
+					{
+						return	can.ajax(
+									{
+										url:	'/signup'
+									,	data:	form_data.form
+									,	type:	'POST'	
+									}
+								)
+					}
+				}
+			,	{}
+			)
+			
+			var usuarios=
+			[
+				{
+					id:1
+				,	username:'user1'
+				,	password:'pass1'
+				}
+			,	{
+					id:2
+				,	username:'user2'
+				,	password:'pass2'
+				}
+			,	{
+					id:3
+				,	username:'user3'
+				,	password:'pass3'
+				}
+			]
+
+			can.fixture(
+				'POST /signin'
+			,	function(original,respondWith)
+				{
+					var	found
+					=	_.find(
+							usuarios
+						,	function(usuario)
+							{
+							
+							return	_.isEqual(usuario.username,original.data.username)
+								&&	_.isEqual(usuario.password,original.data.password)
+							}
+						)
+					return	respondWith(
+								found ? 200 : 420
+							,	found || JSON.stringify({error: 420, message: "No lo encontre"})
+							)
+				}
+			)
+
+			new Sigma.Login(
+				can.$('#home')
+			,	{
+					onSignin:	Personajes.signin
+				,	onSignup:	Personajes.signup
+				,	onSuccess:	function(data) {console.log(data)}
+				}
+			)
+
+			
+		}
+	)
+</script>

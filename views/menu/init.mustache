@@ -1,0 +1,16 @@
+<div class="list-group menu">
+	{{#options}}
+		<a class="list-group-item navegable" data-route="{{key}}">
+			{{name}}
+		</a>
+		{{#if suboptions}}
+			<div class="submenu" data-parent="{{key}}">
+			{{#suboptions}}
+				<a class="list-group-item navegable" data-route="{{key}}">
+					{{name}}
+				</a>
+			{{/suboptions}}
+			</div>
+		{{/if}}
+	{{/options}}
+</div>

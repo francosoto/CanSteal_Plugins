@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Table Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="page-header">
+			<h1>Sigma.Table <small>Table Handler</small></h1>
+		</div>
+		<div class="row">
+			<div class="col-md-7 col-md-offset-1" id="table">
+				
+			</div>
+		</div>
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'sigma/controls/table'
+	,	'can/util/fixture'
+	,	'can/model'
+	).then(
+		function()
+		{
+			var	PersonasData
+			=	[
+					{id: 1, name: 'Franco', lastName: 'Soto', age: 25}
+				,	{id: 2, name: 'Neri', lastName: 'Guidi', age: 36}
+				,	{id: 3, name: 'Ana Luz', lastName: 'Tello', age: 45}
+				,	{id: 4, name: 'Juan', lastName: 'Prongue', age: 28}
+				,	{id: 5, name: 'Julian', lastName: 'Farina', age: 78}
+				,	{id: 6, name: 'Gisela', lastName: 'Martinez', age: 45}
+				,	{id: 7, name: 'Adrian', lastName: 'Bosso', age: 30}
+				,	{id: 8, name: 'German', lastName: 'Cabral', age: 42}
+				,	{id: 9, name: 'Federico', lastName: 'Calle', age: 54}
+				,	{id: 10, name: 'Gerardo', lastName: 'Osdo', age: 13}
+				,	{id: 11, name: 'Gustavo', lastName: 'Frean', age: 55}
+				,	{id: 12, name: 'Cristian', lastName: 'Pacheco', age: 28}
+				,	{id: 13, name: 'Francisco', lastName: 'Sponton', age: 15}
+				,	{id: 14, name: 'Matias', lastName: 'Rack', age: 78}
+				,	{id: 15, name: 'Homero', lastName: 'Simpson', age: 45}
+				,	{id: 16, name: 'Bob', lastName: 'Esponja', age: 87}
+				,	{id: 17, name: 'Patricio', lastName: 'Estrella', age: 15}
+				,	{id: 18, name: 'Goku', lastName: 'Kakaroto', age: 78}
+				,	{id: 19, name: 'Lenny', lastName: 'Leonard', age: 12}
+				]
+
+			can.fixture(
+				'POST /personas/listar'
+			,	function(req,res)
+				{
+					var	Filtered
+					=	req.data.query
+						?	_.filter(
+								PersonasData
+							,	function(persona)
+								{
+									return	persona[req.data.query.key] == req.data.query.value
+								}
+							)
+						:	PersonasData
+					,	offset
+					=	req.data.pagination.offset
+					,	limit
+					=	req.data.pagination.limit
+					,	Sorted
+					=	req.data.sort
+						?	_.sortBy(
+								Filtered
+							,	function(persona,index)
+								{
+									return	persona[req.data.sort.by]
+								}
+							)
+						:	Filtered
+					,	Paginated
+					=	_.filter(
+							req.data.sort && req.data.sort.order == 'asc'
+							?	Sorted.reverse()
+							:	Sorted
+						,	function(persona,index)
+							{
+								return	(index >= offset) && (index < (offset + limit))
+							}
+						)
+
+					return	{
+								items: Paginated
+							,	count: Filtered.length
+							}
+				}
+			)
+
+			can.fixture(
+				'POST /personas/aFilter'
+			,	function(req,res)
+				{
+					var	Filtered
+					=	_.filter(
+							PersonasData
+						,	function(persona)
+							{
+								return	persona.name == req.data.name
+									||	persona.lastName == req.data.lastName
+									||	persona.age == req.data.age
+							}
+						)
+					return	{
+								items: Filtered
+							,	count: Filtered.length
+							}
+				}
+			)
+
+			can.fixture(
+				'POST /personas/sFilter'
+			,	function(req,res)
+				{
+					var	Filtered
+					=	_.filter(
+							PersonasData
+						,	function(persona)
+							{
+								return	persona[req.data.key] == req.data.value
+							}
+						)
+
+					return	{
+								items: Filtered
+							,	count: Filtered.length
+							}
+				}
+			)
+
+			can.Model(
+				'Personas'
+			,	{
+					listar: function(queries)
+					{
+						return	can.ajax(
+									{
+										method: 'POST'
+									,	url: '/personas/listar'
+									,	data: queries
+									}
+								).pipe(
+									function(raw)
+									{
+										return	{
+													items: Personas.models(raw.items)
+												,	count: raw.count
+												}
+									}
+								)
+					}
+				}
+			,	{	}
+			)
+
+			new Sigma.Table(
+				can.$('#table')
+			,	{
+					data: Personas.listar
+				,	view: 'sigma/views/table/personasTemplate.mustache'
+				,	paginable: true
+				,	queries:
+					{
+						pagination:
+						{
+							limit: 5
+						,	maxIndex: 7
+						,	offset: 0
+						}
+					}
+				,	sorteable:	true
+				,	searcheable: true
+				,	searchKey: 'name'
+				}
+			)
+		}
+	)
+</script>

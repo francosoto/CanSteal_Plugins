@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma.Field.Date Demo</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="row">
+			<div class="col-md-4" id="full_calendar">
+			</div>
+			<div class="col-md-4" id="calendar">
+			</div>
+			<div class="col-md-4" id="year_month">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4" id="day_month">
+			</div>
+			<div class="col-md-4" id="day">
+			</div>
+			<div class="col-md-4" id="month">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4" id="hour">
+			</div>
+			<div class="col-md-4" id="hour_min">
+			</div>
+			<div class="col-md-4" id="month">
+			</div>
+		</div>
+		<p></p>
+		<button type="button" class="eliminar">eliminar</button>
+		<p></p>
+		<button type="button" class="instalar">Instalar</button>
+	</body>
+</html>
+<script type='text/javascript' src='../../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'lib'
+	,	'controls/control'
+	,	'controls/form/fields/date/date.js'
+	).then(
+		function()
+		{
+			
+			var date1
+			=	new Sigma.Fields.Date(
+					can.$('<div>')
+						.appendTo(
+							$('#full_calendar')
+						)
+			,	new can.Observe(
+					{
+						name: 'tiempo'
+					,	type: 'date'
+					,	label: 'Tiempo'
+					,	id: 'tiempo'
+					,	format: 'hh:mm'
+					,	position: 'form'
+					,	addon: {
+							type: 'icon'
+						,	icon: 'fa-clock-o'
+						}
+					,	value: '2013-07-01 01:00:00.000'
+					}
+				)
+			)
+			var date2
+			=	new Sigma.Fields.Date(
+					can.$('<div>')
+						.appendTo(
+							$('#calendar')
+						)
+			,	new can.Observe(
+					{
+						name: 'tiempo'
+					,	type: 'date'
+					,	label: 'Tiempo'
+					,	id: 'tiempo'
+					,	format: 'mm-yyyy'
+					,	position: 'form'
+					,	addon: {
+							type: 'icon'
+						,	icon: 'fa-clock-o'
+						}
+					,	value: '2013-07-01 01:00:00.000'
+					}
+				)
+			)
+
+			var date3
+			=	new Sigma.Fields.Date(
+					can.$('<div>')
+						.appendTo(
+							$('#year_month')
+						)
+			,	new can.Observe(
+					{
+						name: 'tiempo'
+					,	type: 'date'
+					,	label: 'Tiempo'
+					,	id: 'tiempo'
+					,	format: 'dd-mm-yyyy'
+					,	position: 'form'
+					,	addon: {
+							type: 'icon'
+						,	icon: 'fa-clock-o'
+						}
+					,	value: 'asasdasdsadsadsad'
+					}
+				)
+			)
+
+			var date4
+			=	new Sigma.Fields.Date(
+					can.$('<div>')
+						.appendTo(
+							$('#day_month')
+						)
+			,	new can.Observe(
+					{
+						name: 'tiempo'
+					,	type: 'date'
+					,	label: 'Tiempo'
+					,	id: 'tiempo'
+					,	format: 'dd-mm'
+					,	position: 'form'
+					,	addon: {
+							type: 'icon'
+						,	icon: 'fa-clock-o'
+						}
+					,	value: '11-12-2014'
+					}
+				)
+			)
+
+			can.bind.call(
+				$('button.eliminar')
+			,	'click'
+			,	function(el)
+				{
+					date1.destroy()
+					date2.destroy()
+				}
+			)
+
+			can.bind.call(
+				$('button.instalar')
+			,	'click'
+			,	function(el)
+				{
+				 	date1
+					=	new Sigma.Fields.Date(
+						can.$('<div>')
+							.appendTo(
+								$('#full_calendar')
+							)
+					,	new can.Observe(
+							{
+								name: 'tiempo'
+							,	type: 'date'
+							,	label: 'Tiempo'
+							,	id: 'tiempo'
+							,	format: 'hh:mm'
+							,	position: 'form'
+							,	addon: {
+									type: 'icon'
+								,	icon: 'fa-clock-o'
+								}
+							,	value: '2013-07-01 01:00:00.000'
+							}
+						)
+					)
+					
+					date2
+					= new Sigma.Fields.Date(
+						can.$('<div>')
+							.appendTo(
+								$('#calendar')
+							)
+					,	new can.Observe(
+							{
+								name: 'tiempo'
+							,	type: 'date'
+							,	label: 'Tiempo'
+							,	id: 'tiempo'
+							,	format: 'dd-mm-yyyy'
+							,	position: 'form'
+							,	addon: {
+									type: 'icon'
+								,	icon: 'fa-clock-o'
+								}
+							,	value: '2013-07-01 01:00:00.000'
+							}
+						)
+					)
+				}
+			)
+			
+		}
+	)
+</script>

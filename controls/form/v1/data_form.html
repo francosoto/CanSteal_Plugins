@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sigma/Form Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div class="page-header">
+			<h1>Sigma.Form <small>+ Data Handler</small></h1>
+		</div>
+		<div class="row">
+			<div class="col-md-7 col-md-offset-1" id="form">
+			</div>
+		</div>
+
+	</body>
+</html>
+<script type='text/javascript' src='../../../steal/steal.js'></script>
+<script type="text/javascript">
+	steal(
+		'jquery'
+	).then(
+		'sigma/controls/form'
+	,	'can/util/fixture'
+	,	'can/model'
+	).then(
+		function()
+		{
+			can.fixture(
+				'GET /ciudades'
+			,	function(req,res)
+				{
+					return	res(200,[{id: 1, name: 'Zarate'},{id: 2, name: 'Campana'}])
+				}
+			)
+
+			can.Model(
+				'Ciudades'
+			,	{
+					findAll: 'GET /ciudades'
+				}
+			,	{
+					getValue: function()
+					{
+						return	this.attr('id')
+					}
+				,	getLabel: function()
+					{
+						return this.attr('name')
+					}
+				}
+			)
+
+			can.Model(
+				'Personas'
+			,	{
+					model: function(data)
+					{
+						var	ciudad
+						=	data.ciudad
+
+						delete data.ciudad
+
+						var	persona
+						=	this._super(data)
+
+						persona
+							.attr(
+								'ciudad'
+							,	Ciudades.model(ciudad)
+							)
+
+						return	persona
+					}
+				}
+			,	{}
+			)
+
+			var	Persona
+			=	Personas.model(
+					{
+						id: 1
+					,	nombre: 'Neri'
+					,	apellido: 'Guidi'
+					,	ciudad:
+						{
+							id: 1
+						,	nombre: 'Zarate'
+						}
+					}
+				)
+
+			new Sigma.Form(
+				can.$('#form')
+			,	{
+					data:
+					[
+					    {
+							type: 'text'
+						,	name: 'nombre'
+						,	label: 'Nombre'
+						}
+					,	{
+							type: 'text'
+						,	name: 'apellido'
+						,	label: 'Apellido'
+						}
+					,   {
+							type: 'autocomplete'
+						,	name: 'ciudad'
+						,	label: 'Ciudad'
+						,	ajax: Ciudades.findAll
+						,	display: 'nombre'
+					    }
+					]
+				,	default_data:	Persona
+				,	id:	'myForm'
+				,	class:	'form'
+				,	type: 'form-horizontal'
+				}
+			)
+		}
+	)
+</script>

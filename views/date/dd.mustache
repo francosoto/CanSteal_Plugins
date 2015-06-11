@@ -1,0 +1,33 @@
+<table class="date table-condensed calendar">
+	<thead>
+		<tr>
+			<th class="prev text-center">
+				<i class="fa fa-chevron-left"></i>
+			</th>
+			<th colspan="5" class="switch text-center">
+				{{month}} {{year}}
+			</th>
+			<th class="next text-center">
+				<i class="fa fa-chevron-right"></i>
+			</th>
+		</tr>
+		<tr>
+			{{#days}}
+				<th class="text-center">
+					{{.}}
+				</th>
+			{{/days}}
+		</tr>
+	</thead>
+	<tbody>
+		{{#weeks}}
+		<tr>
+			{{#days}}
+			<td class="day text-center {{dayClass}}" date-value="{{day}}">
+				{{day}}
+			</td>
+			{{/days}}
+		</tr>
+		{{/weeks}}
+	</tbody>
+</table>

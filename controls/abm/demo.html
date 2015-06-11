@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>QUnit - Sigma.Abm</title>
+</head>
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1>Sigma.Abm</h1>
+		</div>
+				<div id="frame"></div>
+
+	</div>
+	<script type='text/javascript' src='../../steal/steal.js'></script>
+	<script type="text/javascript">
+		steal(
+			'controls/abm'
+		,	'can/util/fixture'
+		,	'can/model'
+		,	'controls/abm/abm.css'
+		,	'models/model.js'
+		).then(
+			function()
+			{
+				var Pais
+				=	['Argentina','Alemania','Angola','Argelia','Austria','Bosnia Hez.','Bolivia','Brasil']
+				,	paisesStore
+				=	can.fixture.store(Pais.length,
+						function(i)
+						{
+							return can.extend(
+										{
+											id:i+1
+										}
+									,	{
+											name: Pais[i]
+										}
+									) 
+								|| {}
+						}
+					)
+
+				can.fixture(
+					'POST /paises'
+				,	function(req,res)
+					{
+						if(req.data.pagination)
+						{
+							var	Filtered
+							=	can.grep(
+									paisesStore.findAll().data
+								,	function(val)
+									{
+										return	req.data
+											?	req.data.query && req.data.query.filters
+												?	val.name.toLowerCase().indexOf(
+														req.data.query.filters[0].value.toLowerCase()
+													) != -1
+												: 	true
+											: 	true
+									}
+								)
+							,	offset
+							=	req.data.pagination.offset
+							,	limit
+							=	req.data.pagination.limit
+							,	Sorted
+							=	req.data.sort
+								?	_.sortBy(
+										Filtered
+									,	function(ruta,index)
+										{
+											return	ruta[req.data.sort.by]
+										}
+									)
+								:	Filtered
+							,	Paginated
+							=	_.filter(
+									req.data.sort && req.data.sort.order == 'asc'
+									?	Sorted.reverse()
+									:	Sorted
+								,	function(ruta,index)
+									{
+										return	(index >= offset) && (index < (offset + limit))
+									}
+								)
+							console.log(Paginated)
+
+							return	{
+										items: Paginated
+									,	count: Filtered.length
+									}
+						}
+						else
+						{
+							return	res(200,req.data)
+						}
+					}
+				)
+
+				Sigma.Model(
+					'Paises'
+				,	{
+						url:'/paises'
+					,	filter: function(query)
+						{
+							return	can.ajax(
+										{
+											url: '/paises'
+										,	method: 'POST'
+										,	data: query
+										}
+									)
+									.pipe(
+										function(raw)
+										{
+											return	{
+														items: Paises.models(raw.items)
+													,	count: raw.count
+													}
+										}
+									)
+						}
+					}
+				,	{	}
+				)
+
+
+				new	Sigma.Abm(
+					can.$('#frame')
+				,	{
+						titles:
+						{
+							create: 	'Crear un país'
+						,	update: 	'Modificar un país'
+						}
+					,	messages:
+						{
+							created: 	"Elemento creado satisfactoriamiente."
+						,	updated: 	"Elemento modificado satisfactoriamiente."
+						,	deleted: 	"Elemento removido satisfactoriamiente."
+						,	failed: 	undefined
+						}
+					,	model: Paises 
+					,	form_data:
+						[
+							{
+								type: 'text'
+							,	name: 'name'
+							,	label: 'Nombre país'
+							,	validate: ['maxLength:40','string']
+							,	required: true
+							}
+						,	{
+								type:	'button'
+							,	name:	'submit'
+							,	submit:	true
+							,	label:	'Guardar'
+							,	'class':'btn-primary'
+							}
+						]
+					,	data:
+						{
+							title: 'ABM Paises'
+						}
+					,	table_data:
+						{
+							paginable: 	{
+											limit:		5
+										,	maxIndex:	7
+										,	offset:		0
+										} //query con datos de paginación
+						,	searcheable:'name' //key de búsqueda
+						,	sorteable: 	true
+						}
+					,	id:	'myForm'
+					,	class: 'unaClase'
+					,	type: 'form-horizontal'
+					,	form_new_extend: 
+						[
+							{
+								type:	'legend'
+							,	label:	'Alta paises'
+							,	name:	'register'
+							}
+						]
+					,	route:
+						{
+							route:	'/:option/:suboption/:abm'
+						,	abm:	'list'
+						}
+					}
+				)
+			}
+		)
+	</script>
+</body>
+</html>

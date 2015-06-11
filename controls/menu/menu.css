@@ -1,0 +1,38 @@
+.navegable {
+	text-decoration: none;
+	color: #428BCA;
+	cursor: pointer;
+}
+
+.navegable.active, .navegable.active:hover {
+	color: white;
+}
+
+.submenu .navegable:last-child {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.submenu .navegable:first-child {
+	margin-top: -1px;
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+.submenu .navegable {
+	background-color: whiteSmoke;
+}
+
+.submenu .navegable:hover {
+	background-color: #DDD;
+}
+
+.submenu .navegable.active {
+	background-color: #DDD !important;
+	color: black !important;
+	text-shadow: none !important;
+	background-image: none !important;
+	background-repeat: repeat !important;
+	border-color: #DDD !important;
+}

@@ -1,0 +1,12 @@
+.container-fluid {
+	padding-top: 60px;
+}
+
+td a:hover{
+	text-decoration:none;
+	cursor: pointer;
+}
+
+td a{
+	margin-left: 5px;
+}

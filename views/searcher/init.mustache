@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="col-md-3">
+		<label class="searcher-label"> Búsqueda Rápida</label> 
+	</div>
+	<div class="col-md-9 input-group">
+		<input name="{{searchKey}}" type="text" class="form-control quick-input">
+		<div class="input-group-btn advanced-dropdown">
+			<button type="button" class="btn btn-default quick-search">
+				{{searchLabel}}
+			</button>
+			{{#if advanced}}
+				<button type="button" class="btn btn-default toggle-busqueda-avanzada" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<div class="dropdown-menu pull-right busqueda-avanzada" role="menu">
+					<h4 class="title">
+						{{advancedTitle}}
+					</h4>
+				</div>
+			{{/if}}
+		</div>
+</div>
+</div>
